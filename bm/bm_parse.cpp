@@ -107,6 +107,26 @@ void bm_yamlcpp_arena(bm::State& st)
     s_bm_case->report(st);
 }
 
+void bm_iguana_yaml(bm::State& st)
+{   
+    auto str = s_bm_case->src; 
+    str.pop_back();
+    if (str[0] == 'v') { // assume appveyor.yml
+        for (auto _ : st)
+        {   
+            appveyor_t app;
+            iguana::from_yaml(app, str.begin(), str.end());
+        }
+    } else {
+        for (auto _ : st)
+        {   
+            travis_t tra;
+            iguana::from_yaml(tra, str.begin(), str.end());
+        }
+    }
+    s_bm_case->report(st);
+}
+
 void bm_libyaml_arena(bm::State& st)
 {
     if(s_bm_case->skip_libyaml_if_needed(st))
@@ -193,19 +213,26 @@ void bm_ryml_inplace_reuse(bm::State& st)
     s_bm_case->report(st);
 }
 
+
 BENCHMARK(bm_ryml_inplace_reuse);
 BENCHMARK(bm_ryml_arena_reuse);
 BENCHMARK(bm_ryml_inplace);
 BENCHMARK(bm_ryml_arena);
 BENCHMARK(bm_libyaml_arena);
 BENCHMARK(bm_libyaml_arena_reuse);
+BENCHMARK(bm_iguana_yaml);
 #ifdef RYML_HAVE_LIBFYAML
 BENCHMARK(bm_libfyaml_arena);
 #endif
 BENCHMARK(bm_yamlcpp_arena);
-BENCHMARK(bm_rapidjson_arena);
-BENCHMARK(bm_rapidjson_inplace);
-BENCHMARK(bm_sajson_arena);
-BENCHMARK(bm_sajson_inplace);
-BENCHMARK(bm_jsoncpp_arena);
-BENCHMARK(bm_nlohmann_arena);
+// BENCHMARK(bm_rapidjson_arena);
+// BENCHMARK(bm_rapidjson_inplace);
+// BENCHMARK(bm_sajson_arena);
+// BENCHMARK(bm_sajson_inplace);
+// BENCHMARK(bm_jsoncpp_arena);
+// BENCHMARK(bm_nlohmann_arena);
+
+// run the follow cmd in the "build" folder
+
+// ./bin/ryml-bm-parse ../bm/cases/appveyor.yml 
+// ./bin/ryml-bm-parse ../bm/cases/travis.yml

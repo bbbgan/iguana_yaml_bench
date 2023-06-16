@@ -80,6 +80,17 @@ c4_install_exports(DEPENDENCIES c4core)
 c4_pack_project()
 
 
+set(IGUANA_DIR
+		3rd/iguana
+)
+include_directories(
+	${IGUANA_DIR}
+    ${IGUANA_DIR}/iguana
+	${IGUANA_DIR}/third_party/frozen/include
+	${IGUANA_DIR}/third_party/rapidxml
+)
+
+
 #-------------------------------------------------------
 # developer targets
 
@@ -98,3 +109,5 @@ c4_add_dev_targets()
 add_custom_target(ryml-uninstall
     "${CMAKE_COMMAND}" -P "${PROJECT_SOURCE_DIR}/cmake/uninstall.cmake"
 )
+
+# cmake -DCMAKE_CXX_STANDARD=20 -RYML_BUILD_BENCHMARKS=ON ..

@@ -58,6 +58,8 @@
 #include <json/json.h>
 #include <nlohmann/json.hpp>
 #include <yaml-cpp/yaml.h>
+#include "iguana/yaml_reader.hpp"
+#include "iguana/yaml_writer.hpp"
 #ifdef RYML_HAVE_LIBFYAML
 #include <libfyaml.h>
 #endif
@@ -199,5 +201,81 @@ USAGE: bm <case.yml>
         return false;
     }
 };
+/*--------- REFLECTION appveyor.yml-------------*/
+struct matrix_t {
+  std::string_view compiler;
+  std::string_view generator;
+  std::string_view configuration;
+};
+REFLECTION(matrix_t, compiler, generator, configuration);
+struct environment_t {
+  std::vector<matrix_t> matrix;
+};
+REFLECTION(environment_t, matrix);
+struct ex_matrix_t {
+  std::string_view fast_finish;
+};
+REFLECTION(ex_matrix_t, fast_finish);
+struct artifact_t {
+  std::string_view path;
+  std::string_view name;
+};
+REFLECTION(artifact_t, path, name);
+struct skip_commit_t {
+  std::vector<std::string_view> files;
+};
+REFLECTION(skip_commit_t, files);
+struct appveyor_t {
+  std::string_view version;
+  std::string_view image;
+  environment_t environment;
+  ex_matrix_t matrix;
+  std::vector<std::string_view> install;
+  std::vector<std::string_view> build_script;
+  std::vector<std::string_view> test_script;
+  std::vector<artifact_t> artifacts;
+  skip_commit_t skip_commits;
+};
+REFLECTION(appveyor_t, version, image, environment, matrix, install,
+           build_script, test_script, artifacts, skip_commits);
 
+/*--------- REFLECTION travis.yml-------------*/
+struct apt_t {
+  std::vector<std::string_view> sources; 
+};
+REFLECTION(apt_t, sources);
+struct addon_t {
+  apt_t apt;
+};
+REFLECTION(addon_t, apt);
+
+struct env_t {
+  std::vector<std::string_view> global; 
+};
+REFLECTION(env_t, global);
+
+struct in_env_t {
+  std::string_view env;
+};
+REFLECTION(in_env_t, env);
+
+struct mat_t {
+  std::vector<in_env_t> include;
+};
+REFLECTION(mat_t, include);
+
+struct travis_t {
+  std::string_view sudo;
+  std::string_view dist;
+  std::string_view language;
+  addon_t addons;
+  env_t env;
+  mat_t matrix;
+  std::vector<std::string_view> install;
+  std::vector<std::string_view> script;
+  std::vector<std::string_view> after_success;
+};
+REFLECTION(travis_t, sudo, dist, language, addons, env, matrix, install, script,
+           after_success);
+    
 #endif /* C4_YML_BM_COMMON_HPP_ */

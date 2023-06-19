@@ -7,7 +7,7 @@ quick start
 ```bash
 mkdir build
 cd build
-cmake -DCMAKE_CXX_STANDARD=20 -RYML_BUILD_BENCHMARKS=ON ..
+cmake -DCMAKE_CXX_STANDARD=20 -DRYML_BUILD_BENCHMARKS=ON ..
 make
 ```
 

@@ -4,6 +4,15 @@ This is a project base on [RapidYAML](https://github.com/biojppm/rapidyaml) to c
 
 quick start
 
+clone the repository
+
+```bash
+git clone --recursive git@github.com:bbbgan/iguana_yaml_bench.git
+cd iguana_yaml_bench
+```
+
+start compile
+
 ```bash
 mkdir build
 cd build
@@ -17,4 +26,6 @@ stay in the "build" folder
 ./bin/ryml-bm-parse ../bm/cases/appveyor.yml 
 ./bin/ryml-bm-parse ../bm/cases/travis.yml
 ```
+
+
 

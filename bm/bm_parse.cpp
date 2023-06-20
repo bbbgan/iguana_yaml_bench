@@ -112,15 +112,15 @@ void bm_iguana_yaml(bm::State& st)
     auto str = s_bm_case->src; 
     str.pop_back();
     if (str[0] == 'v') { // assume appveyor.yml
+        appveyor_t app;
         for (auto _ : st)
         {   
-            appveyor_t app;
             iguana::from_yaml(app, str.begin(), str.end());
         }
     } else {
+        travis_t tra;
         for (auto _ : st)
         {   
-            travis_t tra;
             iguana::from_yaml(tra, str.begin(), str.end());
         }
     }

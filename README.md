@@ -10,6 +10,7 @@ clone the repository
 git clone --recursive git@github.com:bbbgan/iguana_yaml_bench.git
 cd iguana_yaml_bench
 ```
+If you omit --recursive, after cloning you will have to do `git submodule update --init --recursive` .
 
 start compile
 

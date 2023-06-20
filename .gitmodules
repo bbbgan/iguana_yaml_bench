@@ -1,3 +1,6 @@
 [submodule "extern/c4core"]
 	path = ext/c4core
 	url = https://github.com/biojppm/c4core
+[submodule "3rd/iguana"]
+	path = 3rd/iguana
+	url = git@github.com:qicosmos/iguana.git
